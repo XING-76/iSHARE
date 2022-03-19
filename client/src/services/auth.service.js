@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_USER_URL = "https://ishare-v1.netlify.app/auth";
+const API_USER_URL = "https://ishare-v1.herokuapp.com/auth";
 
 class AuthService {
   getToken() {
