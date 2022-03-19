@@ -1,0 +1,46 @@
+/* body */
+body {
+  margin: 0;
+  padding-right: 0 !important;
+  background-color: #fafafa !important;
+  overflow: unset !important;
+  overflow-y: scroll !important;
+}
+
+/* masonry */
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -15px; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 15px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div {
+  /* change div to reference your elements you put in <Masonry> */
+  /* margin-bottom: 15px; */
+  border-radius: 8px;
+}
+
+/* react-router */
+.react-link {
+  display: block;
+  text-decoration: none;
+  color: #000;
+}
+
+.react-navlink {
+  display: block;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.6);
+}
+.active {
+  background-color: #f5f5f5;
+  border-right: 3px solid #212121;
+  color: rgba(0, 0, 0, 0.9);
+}
