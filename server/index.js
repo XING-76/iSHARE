@@ -27,4 +27,8 @@ app.use(cors());
 app.use('/auth', authRoute);
 app.use('/api/pins', passport.authenticate("jwt", { session: false }), pinRoute);
 
+app.get('/', (req, res) => {
+  res.send("Deploy suceessfully!");
+})
+
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
