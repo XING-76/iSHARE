@@ -102,64 +102,63 @@ const CreatePin = (props) => {
     let reqObj = { ...formObj, image, imgUrl: "" };
 
     setLoading(true);
-
-    CustomSwal
-      .fire({
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Create',
-        confirmButtonColor: red[600],
-        cancelButtonColor: grey[500],
-        title: "Create the Pin?",
-        text: "You won't be able to revert this!",
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          PinService.verify(formObj)
-          .then(() => {
-            setMessage("");
-            PinService.upload(reqObj)
-              .then(data => {
-                const { title, description, destinationLink, category } = formObj;
-                const { url } = data.data;
-                let pinObj = {title, description, destinationLink, category, imgUrl: url};
-                PinService.create(pinObj)
-                  .then(() => {
-                    setLoading(false);
-                    CustomSwal
-                      .fire({
-                        icon: 'success',
-                        title: "New pin has been created",
-                        showConfirmButton: false,
-                        timer: 1500
-                      })
-                      .then(() => {
-                        PinService.getPins()
-                        .then(res => {
-                          setPins(res.data);
-                          navigate('/');
+    
+    PinService.verify(formObj)
+      .then(() => {
+        setMessage("");
+        CustomSwal
+          .fire({
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Create',
+            confirmButtonColor: red[600],
+            cancelButtonColor: grey[500],
+            title: "Create the Pin?",
+            text: "You won't be able to revert this!",
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              PinService.upload(reqObj)
+                .then(data => {
+                  const { title, description, destinationLink, category } = formObj;
+                  const { url } = data.data;
+                  let pinObj = {title, description, destinationLink, category, imgUrl: url};
+                  PinService.create(pinObj)
+                    .then(() => {
+                      setLoading(false);
+                      CustomSwal
+                        .fire({
+                          icon: 'success',
+                          title: "New pin has been created",
+                          showConfirmButton: false,
+                          timer: 1500
                         })
-                        .catch(e => console.log(e))
-                      })
-                  })
-                  .catch((err) => {
-                    setMessage(err.response.data);
-                    setLoading(false);
-                  })
-              })
-              .catch(() => {
-                setMessage("Please upload your image");
-                setLoading(false);
-              })
+                        .then(() => {
+                          PinService.getPins()
+                          .then(res => {
+                            setPins(res.data);
+                            navigate('/');
+                          })
+                          .catch(e => console.log(e))
+                        })
+                    })
+                    .catch((err) => {
+                      setMessage(err.response.data);
+                      setLoading(false);
+                    })
+                })
+                .catch(() => {
+                  setMessage("Please upload your image");
+                  setLoading(false);
+                })
+            }
           })
-          .catch(err => {
-            setMessage(err.response.data);
-            setLoading(false);
-          })
-        } else {
-          setLoading(false);
-        }
       })
+      .catch(err => {
+        setMessage(err.response.data);
+        setLoading(false);
+      })
+      
   }
 
   return (
