@@ -9,6 +9,8 @@ const passport = require("passport");
 require('./config/passport')(passport);
 const cors = require("cors");
 
+const PORT = process.env.PORT || 8080;
+
 // connect to DB
 mongoose.connect(process.env.DB_CONNECT, {
   useNewUrlParser: true,
@@ -25,4 +27,4 @@ app.use(cors());
 app.use('/auth', authRoute);
 app.use('/api/pins', passport.authenticate("jwt", { session: false }), pinRoute);
 
-app.listen(process.env.PORT, () => console.log(`Server is running on port ${process.env.DEFAULT_PORT}`));
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
