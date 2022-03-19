@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_USER_URL = "http://localhost:8080/auth";
+const API_USER_URL = "https://ishare-v1.netlify.app/auth";
 
 class AuthService {
   getToken() {

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_IMG_URL = "https://api.cloudinary.com/v1_1/ishare/image/";
-const API_PIN_URL = "http://localhost:8080/api/pins";
+const API_PIN_URL = "https://ishare-v1.netlify.app/api/pins";
 
 class PinService {
 
