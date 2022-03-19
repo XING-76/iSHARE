@@ -1,5 +1,3 @@
-# iSHARE
-
 # <a href=https://ishare-v1.netlify.app/ target=_blank>iSHARE</a>
 
 ![default](https://i.imgur.com/hABgN2o.png)
