@@ -3,6 +3,9 @@ const signupValidation = require('../validation').signupValidation;
 const signinValidation = require('../validation').signinValidation;
 const User = require('../models').userModel;
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require('google-auth-library');
+
+const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
 router.use((req, res, next) => {
   console.log("A request is coming into auth.js");
@@ -17,7 +20,12 @@ router.get('/profile/:user_id', (req, res) => {
 })
 
 router.post('/google', async (req, res) => {
-  const { googleId, imageUrl, email, name } = req.body;
+  const { token, googleId, imageUrl, email, name } = req.body;
+
+  await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+  });
   
   try {
     User.findOne({ email }, async function (err, user) {
