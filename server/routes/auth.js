@@ -5,7 +5,7 @@ const User = require('../models').userModel;
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require('google-auth-library');
 
-const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 router.use((req, res, next) => {
   console.log("A request is coming into auth.js");
@@ -20,40 +20,16 @@ router.get('/profile/:user_id', (req, res) => {
 })
 
 router.post('/google', async (req, res) => {
-  const { token, googleId, imageUrl, email, name } = req.body;
+  const { tokenId } = req.body;
 
-  await client.verifyIdToken({
-    idToken: token,
-    audience: process.env.CLIENT_ID,
-  });
-  
-  try {
-    User.findOne({ email }, async function (err, user) {
-      if(err) return res.status(400).send(err);
-      if(!user) {
-        new User({
-          username: name,
-          password: googleId,
-          email,
-          googleID: googleId,
-          thumbnail: imageUrl,
-          role: "creator"
-        })
-          .save()
-          .then((newUser) => {
-            const tokenObj = { _id: newUser._id, email: newUser.email };
-            const token = jwt.sign(tokenObj, process.env.PASSPORT_SECRET);
-            res.status(200).send({
-              success: true,
-              token: "JWT " + token,
-              user: newUser,
-              msg: "Sign In successfully!"
-            })
-          })
-      } else {
-        user.comparePassword(googleId, function (err, isMatch) {
+  client
+    .verifyIdToken({ idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID })
+    .then(response => {
+      const { email_verified, sub, name, email, picture } = response.payload;
+      if (email_verified) {
+        User.findOne({ email }).exec((err, user) => {
           if(err) return res.status(400).send(err);
-          if(isMatch) {
+          if (user) {
             const tokenObj = { _id: user._id, email: user.email };
             const token = jwt.sign(tokenObj, process.env.PASSPORT_SECRET);
             res.status(200).send({
@@ -63,14 +39,38 @@ router.post('/google', async (req, res) => {
               msg: "Sign In successfully!"
             })
           } else {
-            res.status(401).send("Wrong user");
+            const newUser = new User({
+              username: name,
+              email,
+              password: sub,
+              googleID: sub,
+              thumbnail: picture,
+              role: "creator"
+            });
+            try {
+              newUser
+                .save()
+                .then(data => {
+                  const tokenObj = { _id: data._id, email: data.email };
+                  const token = jwt.sign(tokenObj, process.env.PASSPORT_SECRET);
+                  res.status(200).send({
+                    success: true,
+                    token: "JWT " + token,
+                    user: data,
+                    msg: "Sign In successfully!"
+                  })
+                })
+            } catch (err) {
+              res.status(400).send("User signup failed with google");
+            }
           }
         })
+      } else {
+        res.status(400).send("Google login failed. Try again");
       }
-    })
-  } catch (err) {
-    res.status(400).send("User not saved");
-  }
+      
+    });
+  
 })
 
 router.post('/signup', async (req, res) => {

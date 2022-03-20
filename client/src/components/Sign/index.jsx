@@ -124,7 +124,7 @@ const Sign = (props) => {
   }
 
   const handleGoogleSignIn = (googleData) => {
-    AuthService.googleSignIn(googleData.profileObj)
+    AuthService.googleSignIn({tokenId: googleData.tokenId})
       .then(res => {
         if(res.data.token) {
           localStorage.setItem("user", JSON.stringify(res.data))

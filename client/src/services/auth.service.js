@@ -29,8 +29,8 @@ class AuthService {
     return axios.get( `${API_USER_URL}/profile/${user_id}`, { headers: { Authorization: token } } );
   }
 
-  googleSignIn(googleData) {
-    return axios.post(`${API_USER_URL}/google`, googleData);
+  googleSignIn(tokenId) {
+    return axios.post(`${API_USER_URL}/google`, tokenId);
   }
 }
 
