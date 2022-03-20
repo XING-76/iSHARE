@@ -74,7 +74,10 @@ const Home = (props) => {
 
   const handleDownloadPin = (pinUrl, pinTitle, e) => {
     e.preventDefault();
-    PinService.downloadPin(pinUrl, pinTitle);
+    const cutUrl = pinUrl.split('/').splice(2)[4];
+    const cutUrl_img = pinUrl.split('/').splice(2)[6];
+    const downloadUrl = `https://res.cloudinary.com/ishare/image/upload/${cutUrl}/iSHARE_Pin/${cutUrl_img}`;
+    PinService.downloadPin(downloadUrl, pinTitle);
   }
 
   const handleSavePin = (_id, e) => {
