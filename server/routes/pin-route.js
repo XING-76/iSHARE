@@ -94,7 +94,7 @@ router.post('/search', (req, res) => {
       { category: { $regex: searchInput } }
     ]
   })
-    .populate("creator", ["username", "email"])
+    .populate("creator", ["username", "thumbnail"])
     .then(pin => res.status(200).send(pin))
     .catch((err) => res.send(err))
 })
