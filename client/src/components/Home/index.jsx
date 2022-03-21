@@ -67,14 +67,14 @@ const Home = (props) => {
       PinService.getPins()
       .then(res => {
         setPins(res.data);
-        setLoading(true);
+        setLoading(false);
       })
       .catch(e => console.log(e))
     } else {
       PinService.getCategory(category)
         .then(res => {
           setPins(res.data);
-          setLoading(true);
+          setLoading(false);
         })
         .catch((e) => console.log(e))
     }

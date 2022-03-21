@@ -298,81 +298,87 @@ const PinDetail = (props) => {
       )}
 
       {
-        !loading && otherPins && otherPins.length > 0 ? (
+        !loading ? (
           <>
-            <Typography variant="h5" component="div" mb={2} sx={{textAlign: "center"}}>
-              More like this
-            </Typography>
+            {
+              otherPins && otherPins.length > 0 ? (
+                <>
+                  <Typography variant="h5" component="div" mb={2} sx={{textAlign: "center"}}>
+                    More like this
+                  </Typography>
 
-            <Masonry
-              breakpointCols={breakpointColumnsObj}
-              className="my-masonry-grid"
-              columnClassName="my-masonry-grid_column"
-            >
-              {
-                otherPins.map(otherPin => (
-                  <PinCard
-                    key={otherPin._id}
+                  <Masonry
+                    breakpointCols={breakpointColumnsObj}
+                    className="my-masonry-grid"
+                    columnClassName="my-masonry-grid_column"
                   >
-                    <Link
-                      className="react-link"
-                      to={`/pinDetail/${otherPin._id}`}
-                      state={{category: otherPin.category}}
-                    >
-                      <div className="pin-cover">
-                        <img
-                          className="pin-img"
-                          src={otherPin.imgUrl}
-                          alt="Pin"
-                        />
-                        <div className="pin-hover">
-                          <div className="btn-groups">
-                            <IconButton
-                              className="btn-download"
-                              sx={{p: 0}}
-                              onClick={(e) => handleDownloadPin(
-                                otherPin.imgUrl,
-                                otherPin.imgUrl.split('/').splice(2).pop().substring(0, otherPin.imgUrl.length - 4),
-                                e
-                              )}
-                            >
-                              <Avatar sx={{ bgcolor: "#ffffff", width: 30, height: 30}}>
-                                <DownloadIcon fontSize="small" style={{color: grey[900]}}/>
-                              </Avatar>
-                            </IconButton>
-                            <Button className="btn-save" sx={{height: 30}} variant="contained" disableElevation>
-                              Save
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                    <Link to={`/profile/${otherPin.creator._id}`} className="react-link">
-                      <div className="pin-creator">
-                        <Stack direction="row" spacing={2} sx={{m: 1}}>
-                          <Avatar
-                            src={otherPin.creator.thumbnail}
-                            alt={otherPin.creator.username}
-                            sx={{ bgcolor: deepPurple[500], width: 30, height: 30 }}
+                    {
+                      otherPins.map(otherPin => (
+                        <PinCard
+                          key={otherPin._id}
+                        >
+                          <Link
+                            className="react-link"
+                            to={`/pinDetail/${otherPin._id}`}
+                            state={{category: otherPin.category}}
                           >
-                            {otherPin.creator.username.charAt(0)}
-                          </Avatar>
-                          <Typography variant="subtitle1" component="div" mt={1}>
-                            {otherPin.creator.username}
-                          </Typography>
-                        </Stack>
-                      </div>
-                    </Link>
-                  </PinCard>
-                ))
-              }
-            </Masonry>
+                            <div className="pin-cover">
+                              <img
+                                className="pin-img"
+                                src={otherPin.imgUrl}
+                                alt="Pin"
+                              />
+                              <div className="pin-hover">
+                                <div className="btn-groups">
+                                  <IconButton
+                                    className="btn-download"
+                                    sx={{p: 0}}
+                                    onClick={(e) => handleDownloadPin(
+                                      otherPin.imgUrl,
+                                      otherPin.imgUrl.split('/').splice(2).pop().substring(0, otherPin.imgUrl.length - 4),
+                                      e
+                                    )}
+                                  >
+                                    <Avatar sx={{ bgcolor: "#ffffff", width: 30, height: 30}}>
+                                      <DownloadIcon fontSize="small" style={{color: grey[900]}}/>
+                                    </Avatar>
+                                  </IconButton>
+                                  <Button className="btn-save" sx={{height: 30}} variant="contained" disableElevation>
+                                    Save
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                          <Link to={`/profile/${otherPin.creator._id}`} className="react-link">
+                            <div className="pin-creator">
+                              <Stack direction="row" spacing={2} sx={{m: 1}}>
+                                <Avatar
+                                  src={otherPin.creator.thumbnail}
+                                  alt={otherPin.creator.username}
+                                  sx={{ bgcolor: deepPurple[500], width: 30, height: 30 }}
+                                >
+                                  {otherPin.creator.username.charAt(0)}
+                                </Avatar>
+                                <Typography variant="subtitle1" component="div" mt={1}>
+                                  {otherPin.creator.username}
+                                </Typography>
+                              </Stack>
+                            </div>
+                          </Link>
+                        </PinCard>
+                      ))
+                    }
+                  </Masonry>
+                </>
+              ) : (
+                <Typography variant="h5" align="center" gutterBottom component="div">
+                  No related pins
+                </Typography>
+              )
+            }
           </>
-        ) : (
-          <Typography variant="h5" align="center" gutterBottom component="div">
-            No related pins
-          </Typography>
-        )
+        ) : (<></>)
       }
     </Box>
   )
