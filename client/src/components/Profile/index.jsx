@@ -218,161 +218,181 @@ const Profile = (props) => {
 
               {
                 fabType === "Created" ? (
-                  <Masonry
-                    breakpointCols={breakpointColumnsObj}
-                    className="my-masonry-grid"
-                    columnClassName="my-masonry-grid_column"
-                    style={{padding: ".8rem"}}
-                  >
+                  <>
                     {
-                      createdPins.map(createdPin => (
-                        <PinCard
-                          key={createdPin._id}
+                      createdPins.length > 0 ? (
+                        <Masonry
+                          breakpointCols={breakpointColumnsObj}
+                          className="my-masonry-grid"
+                          columnClassName="my-masonry-grid_column"
+                          style={{padding: ".8rem"}}
                         >
-                          <Link
-                            className="react-link"
-                            to={`/pinDetail/${createdPin._id}`}
-                            state={{category: createdPin.category}}
-                          >
-                            <div className="pin-cover">
-                              <img
-                                className="pin-img"
-                                src={createdPin.imgUrl}
-                                alt="Pin"
-                              />
-                              <div className="pin-hover">
-                                <div className="btn-groups">
-                                  <IconButton
-                                    className="btn-download"
-                                    sx={{p: 0}}
-                                    onClick={(e) => handleDownloadPin(
-                                      createdPin.imgUrl,
-                                      createdPin.imgUrl.split('/').splice(2).pop().substring(0, createdPin.imgUrl.length - 4),
-                                      e
-                                    )}
-                                  >
-                                    <Avatar sx={{ bgcolor: "#ffffff", width: 30, height: 30}}>
-                                      <DownloadIcon fontSize="small" style={{color: grey[900]}}/>
-                                    </Avatar>
-                                  </IconButton>
-                                  <Button
-                                    className="btn-save"
-                                    variant="contained"
-                                    disableElevation
-                                    sx={{height: 30}}
-                                    onClick={(e) => handleSavePin(createdPin._id, e)}
-                                  >
-                                    Save
-                                  </Button>
-                                </div>
-                              </div>
-                            </div>
-                          </Link>
-                          <Link to={`/profile/${createdPin.creator._id}`} className="react-link">
-                            <div className="pin-creator">
-                              <Stack direction="row" spacing={2} sx={{m: 1}}>
-                                <Avatar
-                                  src={createdPin.creator.thumbnail}
-                                  alt={createdPin.creator.username}
-                                  sx={{ bgcolor: deepPurple[500], width: 30, height: 30 }}
+                          {
+                            createdPins.map(createdPin => (
+                              <PinCard
+                                key={createdPin._id}
+                              >
+                                <Link
+                                  className="react-link"
+                                  to={`/pinDetail/${createdPin._id}`}
+                                  state={{category: createdPin.category}}
                                 >
-                                  {createdPin.creator.username.charAt(0)}
-                                </Avatar>
-                                <Typography variant="subtitle1" component="div" mt={1}>
-                                  {createdPin.creator.username}
-                                </Typography>
-                              </Stack>
-                            </div>
-                          </Link>
-                        </PinCard>
-                      ))
+                                  <div className="pin-cover">
+                                    <img
+                                      className="pin-img"
+                                      src={createdPin.imgUrl}
+                                      alt="Pin"
+                                    />
+                                    <div className="pin-hover">
+                                      <div className="btn-groups">
+                                        <IconButton
+                                          className="btn-download"
+                                          sx={{p: 0}}
+                                          onClick={(e) => handleDownloadPin(
+                                            createdPin.imgUrl,
+                                            createdPin.imgUrl.split('/').splice(2).pop().substring(0, createdPin.imgUrl.length - 4),
+                                            e
+                                          )}
+                                        >
+                                          <Avatar sx={{ bgcolor: "#ffffff", width: 30, height: 30}}>
+                                            <DownloadIcon fontSize="small" style={{color: grey[900]}}/>
+                                          </Avatar>
+                                        </IconButton>
+                                        <Button
+                                          className="btn-save"
+                                          variant="contained"
+                                          disableElevation
+                                          sx={{height: 30}}
+                                          onClick={(e) => handleSavePin(createdPin._id, e)}
+                                        >
+                                          Save
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </Link>
+                                <Link to={`/profile/${createdPin.creator._id}`} className="react-link">
+                                  <div className="pin-creator">
+                                    <Stack direction="row" spacing={2} sx={{m: 1}}>
+                                      <Avatar
+                                        src={createdPin.creator.thumbnail}
+                                        alt={createdPin.creator.username}
+                                        sx={{ bgcolor: deepPurple[500], width: 30, height: 30 }}
+                                      >
+                                        {createdPin.creator.username.charAt(0)}
+                                      </Avatar>
+                                      <Typography variant="subtitle1" component="div" mt={1}>
+                                        {createdPin.creator.username}
+                                      </Typography>
+                                    </Stack>
+                                  </div>
+                                </Link>
+                              </PinCard>
+                            ))
+                          }
+                        </Masonry>
+                      ) : (
+                        <Typography variant="h5" align="center" gutterBottom component="div">
+                          No Created pins
+                        </Typography>
+                      )
                     }
-                  </Masonry>
+                  </>
                 ) : (
-                  <Masonry
-                    breakpointCols={breakpointColumnsObj}
-                    className="my-masonry-grid"
-                    columnClassName="my-masonry-grid_column"
-                    style={{padding: ".8rem"}}
-                  >
+                  <>
                     {
-                      savedPins.map(savedPin => (
-                        <PinCard
-                          key={savedPin._id}
+                      savedPins.length > 0 ? (
+                        <Masonry
+                          breakpointCols={breakpointColumnsObj}
+                          className="my-masonry-grid"
+                          columnClassName="my-masonry-grid_column"
+                          style={{padding: ".8rem"}}
                         >
-                          <Link
-                            className="react-link"
-                            to={`/pinDetail/${savedPin._id}`}
-                            state={{category: savedPin.category}}
-                          >
-                            <div className="pin-cover">
-                              <img
-                                className="pin-img"
-                                src={savedPin.imgUrl}
-                                alt="Pin"
-                              />
-                              <div className="pin-hover">
-                                <div className="btn-groups">
-                                  <IconButton
-                                    className="btn-download"
-                                    sx={{p: 0}}
-                                    onClick={(e) => handleDownloadPin(
-                                      savedPin.imgUrl,
-                                      savedPin.imgUrl.split('/').splice(2).pop().substring(0, savedPin.imgUrl.length - 4),
-                                      e
-                                    )}
-                                  >
-                                    <Avatar sx={{ bgcolor: "#ffffff", width: 30, height: 30}}>
-                                      <DownloadIcon fontSize="small" style={{color: grey[900]}}/>
-                                    </Avatar>
-                                  </IconButton>
-                                  {
-                                    currentUser.user._id === creatorID ? (
-                                      <Button
-                                        className="btn-delete"
-                                        variant="contained"
-                                        disableElevation
-                                        sx={{height: 30}}
-                                        onClick={(e) => handleDeleteSavedPin(savedPin._id, e)}
-                                      >
-                                        Delete
-                                      </Button>
-                                    ) : (
-                                      <Button
-                                        className="btn-delete"
-                                        variant="contained"
-                                        disableElevation
-                                        sx={{height: 30}}
-                                        onClick={(e) => handleSavePin(savedPin._id, e)}
-                                      >
-                                        Save
-                                      </Button>
-                                    )
-                                  }
-                                </div>
-                              </div>
-                            </div>
-                          </Link>
-                          <Link to={`/profile/${savedPin.creator._id}`} className="react-link">
-                            <div className="pin-creator">
-                              <Stack direction="row" spacing={2} sx={{m: 1}}>
-                                <Avatar
-                                  src={savedPin.creator.thumbnail}
-                                  alt={savedPin.creator.username}
-                                  sx={{ bgcolor: deepPurple[500], width: 30, height: 30 }}
+                          {
+                            savedPins.map(savedPin => (
+                              <PinCard
+                                key={savedPin._id}
+                              >
+                                <Link
+                                  className="react-link"
+                                  to={`/pinDetail/${savedPin._id}`}
+                                  state={{category: savedPin.category}}
                                 >
-                                  {savedPin.creator.username.charAt(0)}
-                                </Avatar>
-                                <Typography variant="subtitle1" component="div" mt={1}>
-                                  {savedPin.creator.username}
-                                </Typography>
-                              </Stack>
-                            </div>
-                          </Link>
-                        </PinCard>
-                      ))
+                                  <div className="pin-cover">
+                                    <img
+                                      className="pin-img"
+                                      src={savedPin.imgUrl}
+                                      alt="Pin"
+                                    />
+                                    <div className="pin-hover">
+                                      <div className="btn-groups">
+                                        <IconButton
+                                          className="btn-download"
+                                          sx={{p: 0}}
+                                          onClick={(e) => handleDownloadPin(
+                                            savedPin.imgUrl,
+                                            savedPin.imgUrl.split('/').splice(2).pop().substring(0, savedPin.imgUrl.length - 4),
+                                            e
+                                          )}
+                                        >
+                                          <Avatar sx={{ bgcolor: "#ffffff", width: 30, height: 30}}>
+                                            <DownloadIcon fontSize="small" style={{color: grey[900]}}/>
+                                          </Avatar>
+                                        </IconButton>
+                                        {
+                                          currentUser.user._id === creatorID ? (
+                                            <Button
+                                              className="btn-delete"
+                                              variant="contained"
+                                              disableElevation
+                                              sx={{height: 30}}
+                                              onClick={(e) => handleDeleteSavedPin(savedPin._id, e)}
+                                            >
+                                              Delete
+                                            </Button>
+                                          ) : (
+                                            <Button
+                                              className="btn-delete"
+                                              variant="contained"
+                                              disableElevation
+                                              sx={{height: 30}}
+                                              onClick={(e) => handleSavePin(savedPin._id, e)}
+                                            >
+                                              Save
+                                            </Button>
+                                          )
+                                        }
+                                      </div>
+                                    </div>
+                                  </div>
+                                </Link>
+                                <Link to={`/profile/${savedPin.creator._id}`} className="react-link">
+                                  <div className="pin-creator">
+                                    <Stack direction="row" spacing={2} sx={{m: 1}}>
+                                      <Avatar
+                                        src={savedPin.creator.thumbnail}
+                                        alt={savedPin.creator.username}
+                                        sx={{ bgcolor: deepPurple[500], width: 30, height: 30 }}
+                                      >
+                                        {savedPin.creator.username.charAt(0)}
+                                      </Avatar>
+                                      <Typography variant="subtitle1" component="div" mt={1}>
+                                        {savedPin.creator.username}
+                                      </Typography>
+                                    </Stack>
+                                  </div>
+                                </Link>
+                              </PinCard>
+                            ))
+                          }
+                        </Masonry>
+                      ) : (
+                        <Typography variant="h5" align="center" gutterBottom component="div">
+                          No Saved pins
+                        </Typography>
+                      )
                     }
-                  </Masonry>
+                  </>
                 )
               }
               
