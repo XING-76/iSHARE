@@ -62,7 +62,7 @@ const CssTextField = styled(TextField)({
 });
 
 const PinDetail = (props) => {
-  const { currentUser, fisherYatesShuffle, handleDownloadPin, handleSavePin } = props;
+  const { currentUser, fisherYatesShuffle, handleDownloadPin, handleSavePin, loading, setLoading } = props;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -75,8 +75,14 @@ const PinDetail = (props) => {
   const [postComment, setPostComment] = useState("");
 
   useEffect(() => {
-    getPinDetail();
-    getOtherPins();
+    const timer = setTimeout(() => {
+      setLoading(true);
+      getPinDetail();
+      getOtherPins();
+    }, 1500);
+    return () => {
+      clearTimeout(timer);
+    }
   }, [pinID])
   
   const getPinDetail = () => {

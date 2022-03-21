@@ -31,7 +31,7 @@ const Home = (props) => {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [pins, setPins] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getRandomPins();
@@ -51,6 +51,7 @@ const Home = (props) => {
   }
 
   const getRandomPins = () => {
+    setLoading(true);
     PinService.getPins()
       .then(res => {
         setPins(fisherYatesShuffle(res.data));
@@ -60,14 +61,21 @@ const Home = (props) => {
   }
 
   const handleCategoryActive = (category) => {
+    setLoading(true);
     handleDrawerToggle();
     if(category === "All") {
       PinService.getPins()
-      .then(res => setPins(res.data))
+      .then(res => {
+        setPins(res.data);
+        setLoading(true);
+      })
       .catch(e => console.log(e))
     } else {
       PinService.getCategory(category)
-        .then(res => setPins(res.data))
+        .then(res => {
+          setPins(res.data);
+          setLoading(true);
+        })
         .catch((e) => console.log(e))
     }
   }
@@ -186,6 +194,8 @@ const Home = (props) => {
             path="/PinDetail/:pinID"
             element={
               <PinDetail
+                loading={loading}
+                setLoading={setLoading}
                 handleSavePin={handleSavePin}
                 handleDownloadPin={handleDownloadPin}
                 fisherYatesShuffle={fisherYatesShuffle}
