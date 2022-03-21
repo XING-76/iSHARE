@@ -1,6 +1,6 @@
-# <a href=https://ishare-v1.netlify.app/ target=_blank>iSHARE</a>
+# iSHARE
 
-![default](https://i.imgur.com/hABgN2o.png)
+<a href="https://ishare-v1.netlify.app/" target="_blank" rel="noopener noreferrer"><img src="https://i.imgur.com/hABgN2o.png" alt="iSHARE"></a>
 
 # Demo
 
