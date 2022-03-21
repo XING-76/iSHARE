@@ -75,19 +75,17 @@ const PinDetail = (props) => {
   const [postComment, setPostComment] = useState("");
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(true);
       getPinDetail();
       getOtherPins();
-    }, 1500);
-    return () => {
-      clearTimeout(timer);
-    }
   }, [pinID])
   
   const getPinDetail = () => {
+    setLoading(true);
     PinService.getPin(pinID)
-      .then((res) => setPinDetail(res.data))
+      .then((res) => {
+        setPinDetail(res.data);
+        setLoading(false);
+      })
       .catch(() => navigate('/notfound'))
   }
 
