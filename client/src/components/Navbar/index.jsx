@@ -17,7 +17,7 @@ import PinService from "../../services/pin.service";
 
 
 const Navbar = (props) => {
-  const { drawerWidth, handleDrawerToggle, currentUser, setPins } = props;
+  const { drawerWidth, handleDrawerToggle, currentUser, setPins, setLoading } = props;
 
   const [searchInputs, setSearchPins] = useState("");
 
@@ -26,10 +26,12 @@ const Navbar = (props) => {
   const handleSearch = (key) => {
     if(key === "Enter") {
       navigate('/');
+      setLoading(true);
       PinService.searchPins(searchInputs)
         .then(res => {
           setPins(res.data);
           setSearchPins("");
+          setLoading(false);
         })
         .catch(e => console.log(e));
     }

@@ -133,6 +133,7 @@ const Home = (props) => {
         handleDrawerToggle={handleDrawerToggle}
       />
       <Navbar
+        setLoading={setLoading}
         setPins={setPins}
         currentUser={currentUser}
         drawerWidth={drawerWidth}
