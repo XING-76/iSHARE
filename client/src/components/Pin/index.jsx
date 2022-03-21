@@ -19,12 +19,12 @@ const breakpointColumnsObj = {
 };
 
 const Pin = (props) => {
-  const { pins, handleDownloadPin, handleSavePin } = props;
+  const { pins, handleDownloadPin, handleSavePin, loading } = props;
 
   return (
     <>
       {
-        pins && pins.length > 0 ? (
+        !loading && pins && pins.length > 0 ? (
           <Masonry
             breakpointCols={breakpointColumnsObj}
             className="my-masonry-grid"

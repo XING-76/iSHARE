@@ -298,7 +298,7 @@ const PinDetail = (props) => {
       )}
 
       {
-        otherPins && otherPins.length > 0 ? (
+        !loading && otherPins && otherPins.length > 0 ? (
           <>
             <Typography variant="h5" component="div" mb={2} sx={{textAlign: "center"}}>
               More like this

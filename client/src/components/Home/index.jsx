@@ -154,6 +154,7 @@ const Home = (props) => {
             path='/'
             element={
               <Pin
+                loading={loading}
                 handleSavePin={handleSavePin}
                 handleDownloadPin={handleDownloadPin}
                 pins={pins}
@@ -166,6 +167,7 @@ const Home = (props) => {
             path='/:category'
             element={
               <Pin
+                loading={loading}
                 handleSavePin={handleSavePin}
                 handleDownloadPin={handleDownloadPin}
                 pins={pins}
